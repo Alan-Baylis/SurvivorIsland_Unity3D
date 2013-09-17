@@ -2,6 +2,7 @@
 
 static var charge : int = 0;
 var collectSound : AudioClip;
+private var fireIsLit : boolean = false;
 
 // HUD
 
@@ -12,6 +13,16 @@ var chargeHudGUI : GUITexture;
 
 var meterCharge : Texture2D[];
 var meter : Renderer;
+
+// Matches
+
+private var haveMatches : boolean = false;
+var matchGUIprefab : GUITexture;
+private var matchGUI : GUITexture;
+
+// Text
+
+var textHints : GUIText;
 
 function Start () {
 
@@ -42,4 +53,38 @@ function HUDon()
 	{
 		chargeHudGUI.enabled = true;
 	}
+}
+
+function MatchPickup()
+{
+	haveMatches = true;
+	AudioSource.PlayClipAtPoint(collectSound, transform.position);
+	var matchHUD : GUITexture = Instantiate(matchGUIprefab, Vector3(0.15,0.1,0), transform.rotation);
+	matchGUI = matchHUD;
+}
+
+function OnControllerColliderHit (col : ControllerColliderHit)
+{
+	if (col.gameObject.name == "campfire")
+	{	
+		if(haveMatches && !fireIsLit)
+		{
+			LightFire(col.gameObject);
+		}
+		else if (!haveMatches && !fireIsLit)
+		{	
+			textHints.SendMessage("ShowHint","I could use this campfire to signal for help..if only I could light it..");
+		}
+	}
+}
+
+function LightFire (campfire : GameObject)
+{
+	campfire.GetComponentInChildren(ParticleSystem).Play();
+	
+	campfire.audio.Play();
+	Destroy(matchGUI);
+	haveMatches = false;
+	fireIsLit = true;
+	//winObj.SendMessage("GameOver");
 }
