@@ -16,6 +16,8 @@ public class MainMenuGUI : MonoBehaviour {
 	public Rect instructions;
 	
 	string menuPage = "main";
+	
+	public GameObject startObj;
 
 	// Use this for initialization
 	void Start () 
@@ -80,5 +82,14 @@ public class MainMenuGUI : MonoBehaviour {
 		
 		
 		
+	}
+	
+	IEnumerator fadeButtonAction (string levelName)
+	{
+		audio.PlayOneShot(beep);
+		
+		yield return new WaitForSeconds(0.35f);
+		
+		startObj.SendMessage("LetsBegin");
 	}
 }

@@ -12,6 +12,8 @@ private var menuPage : String = "main";
 
 var instructions : Rect;
 
+var startObj : GameObject;
+
 function Start () 
 {
  menuAreaNormalized = Rect (menuArea.x * Screen.width - (menuArea.width * 0.5f), menuArea.y * Screen.height - (menuArea.height * 0.5f), menuArea.width, menuArea.height);
@@ -28,7 +30,8 @@ function OnGUI ()
 	
 		if(GUI.Button (Rect (playButton), "Play"))
 		{
-			ButtonAction("Island");
+			//ButtonAction("Island");
+			fadeButtonAction();
 		}
 		
 		if(GUI.Button (Rect (instructionsButton), "Instructions"))
@@ -76,5 +79,14 @@ function ButtonAction (levelName : String)
 		Debug.Log("Have Quit");
 	}
 }
+
+function fadeButtonAction ()
+	{
+		audio.PlayOneShot(beep);
+		
+		yield new WaitForSeconds(0.35f);
+		
+		startObj.SendMessage("LetsBegin");
+	}
 
 @script RequireComponent(AudioSource)

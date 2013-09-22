@@ -24,6 +24,10 @@ private var matchGUI : GUITexture;
 
 var textHints : GUIText;
 
+// Winning Animation
+
+var winObj : GameObject;
+
 function Start () {
 
 	charge = 0;
@@ -86,5 +90,5 @@ function LightFire (campfire : GameObject)
 	Destroy(matchGUI);
 	haveMatches = false;
 	fireIsLit = true;
-	//winObj.SendMessage("GameOver");
+	winObj.SendMessage("GameOver");
 }

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Inventory : MonoBehaviour {
 	
+	public GUITexture  fadeWhite;
+	
 	public static int charge = 0;
 	public AudioClip collectSound;
 	bool fireIsLit = false;
@@ -22,11 +24,17 @@ public class Inventory : MonoBehaviour {
 	
 	// Text
 	public GUIText textHints;
+	
+	// Winning Animation
+	
+	public GameObject winObj;
 
 	// Use this for initialization
 	void Start () {
 		charge = 0;
 		meter.material.mainTexture = meterCharge[charge];
+		
+		Instantiate(fadeWhite);
 	}
 	
 	// Update is called once per frame
@@ -85,7 +93,7 @@ public class Inventory : MonoBehaviour {
 		Destroy (matchGUI);
 		haveMatches = false;
 		fireIsLit = true;
-		//winObj.SendMessage("GameOver");
+		winObj.SendMessage("GameOver");
 		
 		
 	}
